@@ -1,0 +1,18 @@
+# Keep the dataset confidential — do NOT commit it
+dataset_exercise.csv
+*.csv
+*.xlsx
+
+# PDF
+*.pdf
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# IDE / editor
+.idea/
+.vscode/

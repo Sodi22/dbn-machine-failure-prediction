@@ -1,0 +1,58 @@
+# Machine-Failure Prediction with Dynamic Bayesian Networks
+
+Predict whether a machine will enter a **Failure** state in the next time window,
+based on its current state and recent alarm activity:
+
+> **P(State₍t+1₎ = Failure | State₍t₎, alarm features at t)**
+
+Two notebooks implement this with [`pgmpy`](https://pgmpy.org/), using two different
+training methods.
+
+## The two methods
+
+**`dbn_failure_prediction.ipynb` — BDeu-smoothed**
+Declares the DBN structure, then learns the probabilities on an equivalent flat
+Bayesian network using a **BDeu (Bayesian) prior**. Smoothing gives unseen alarm
+combinations a small non-zero probability instead of zero, so inference stays robust.
+Trained on the first 75% of the data and evaluated on the held-out last 25%.
+Inference uses Variable Elimination.
+
+**`dbn_alarm_data_prediction.ipynb` — MLE**
+Uses `pgmpy`'s `DynamicBayesianNetwork` directly, with parameters learned by
+**Maximum Likelihood Estimation** and inference via `DBNInference`. Simpler and
+closer to the textbook DBN, but unseen alarm combinations get zero probability.
+
+Both share the same pipeline: compute alarm durations → discretise counts and
+durations into categories → pick the 3 most frequent alarms as features → build one
+row per time window → form consecutive (t → t+1) transitions → train and predict.
+
+## Setup
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate        # Windows
+# source .venv/bin/activate   # macOS / Linux
+
+pip install -r requirements.txt
+```
+
+## Dataset
+
+The dataset is **not included**. Put a semicolon-separated `dataset_exercise.csv`
+in the project root with these columns:
+
+| Column | Meaning |
+|--------|---------|
+| `start_alarm` | alarm start timestamp |
+| `end_alarm` | alarm end timestamp |
+| `alarm_id` | alarm identifier |
+| `machine_state` | `Running` or `Failure` |
+| `time_window` | integer index of the time window |
+
+## Run
+
+```bash
+jupyter lab        # or: jupyter notebook
+```
+
+Open either notebook and run all cells (**Kernel → Restart & Run All**).
