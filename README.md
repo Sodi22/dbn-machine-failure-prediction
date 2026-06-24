@@ -45,10 +45,10 @@ use only the top 3.
 **`dbn_fit_all_alarms_aggregated.ipynb`** trains a real `DynamicBayesianNetwork` with
 `dbn.fit()` (and `DBNInference`) on **all 94 alarms**. Since a `State` node can't
 depend on 94 alarms individually, each window's alarm activity is summarised into the
-exercise's two attributes — **Count** and **Duration** — aggregated two ways each
+exercise's two attributes:  (**Count** and **Duration**), aggregated two ways each
 (total firings / distinct alarms, and total / longest duration), discretised into four
 categories. It's a demonstration that the pure `dbn.fit()` path *can* handle all 94
-alarms; aggregation loses *which* alarm fired, so it scores below the per-alarm models.
+alarms, aggregation loses *which* alarm fired, so it scores below the per-alarm models.
 
 ## Setup
 
