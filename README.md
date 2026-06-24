@@ -36,8 +36,8 @@ Two extra notebooks watch **all 94 alarms** instead of the 3 most frequent:
 A single `State` node can't depend on 94 alarms at once (its table would be
 astronomically large), so these treat the alarms as **conditionally independent
 given the state** (Naive-Bayes): `State_t → State_t+1` and `State_t+1 → each alarm`.
-Everything else is identical. They actually score a bit *worse* — most of the 94
-alarms are almost always idle, so they add noise — which is why the main notebooks
+Everything else is identical. They actually score a bit *worse*, most of the 94
+alarms are almost always idle, so they add noise, which is why the main notebooks
 use only the top 3.
 
 ## Setup
